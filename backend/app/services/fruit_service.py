@@ -6,6 +6,34 @@ from app.services.llm_service import interpretar_pergunta
 
 logger = logging.getLogger(__name__)
 
+NORMALIZACOES_FRUTA = {
+    "bananas": "banana",
+    "maçãs": "maçã",
+    "macas": "maçã",
+    "morangos": "morango",
+    "uvas": "uva",
+    "laranjas": "laranja",
+    "abacaxis": "abacaxi",
+    "melancias": "melancia",
+    "melões": "melão",
+    "meloes": "melão",
+    "limões": "limão",
+    "limoes": "limão",
+    "pêras": "pêra",
+    "peras": "pêra",
+    "kiwis": "kiwi",
+    "mamões": "mamão",
+    "mamoes": "mamão",
+    "cocos": "coco",
+    "goiabas": "goiaba",
+    "pêssegos": "pêssego",
+    "pessegos": "pêssego",
+    "ameixas": "ameixa",
+    "caquis": "caqui",
+    "framboesas": "framboesa",
+    "mirtilos": "mirtilo",
+}
+
 
 def responder_pergunta(pergunta: str) -> str:
     """Fluxo de domínio do chatbot.
@@ -30,12 +58,15 @@ def responder_pergunta(pergunta: str) -> str:
             ),
         )
 
+    fruta_lower = fruta.lower()
+    fruta_normalizada = NORMALIZACOES_FRUTA.get(fruta_lower, fruta_lower)
+
     conn = get_db_connection()
     cursor = conn.cursor()
 
     cursor.execute(
         "SELECT name, price, stock FROM fruits WHERE LOWER(name) = LOWER(?)",
-        (fruta,),
+        (fruta_normalizada,),
     )
 
     result = cursor.fetchone()

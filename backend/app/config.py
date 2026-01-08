@@ -19,8 +19,8 @@ if not GEMINI_API_KEY:
         "Verifique se o arquivo backend/.env existe e contém GEMINI_API_KEY=SUASENHA."
     )
 
-GEMINI_MODEL_NAME = os.getenv("GEMINI_MODEL_NAME", "models/gemini-1.5-flash")
-logger.info("Usando modelo do Gemini (config): %s", GEMINI_MODEL_NAME)
-
 client = genai.Client(api_key=GEMINI_API_KEY)
+
+GEMINI_MODEL_NAME = os.getenv("GEMINI_MODEL_NAME", "gemini-2.5-flash")
+logger.info("Usando modelo do Gemini (config): %s", GEMINI_MODEL_NAME)
 

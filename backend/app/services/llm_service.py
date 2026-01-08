@@ -107,7 +107,14 @@ def interpretar_pergunta(pergunta: str) -> Dict[str, str]:
         texto = response.text.strip()
         logger.debug("Resposta bruta do Gemini: %s", texto)
 
-        dados = json.loads(texto)
+        start = texto.find("{")
+        end = texto.rfind("}")
+        if start != -1 and end != -1 and start < end:
+            texto_json = texto[start : end + 1]
+        else:
+            texto_json = texto  # tenta usar como está, para não perder informação
+
+        dados = json.loads(texto_json)
         fruit = dados.get("fruit")
         info = dados.get("info")
         if not fruit or not info:
