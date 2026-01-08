@@ -1,0 +1,19 @@
+# Ambientes virtuais Python
+.venv/
+venv/
+
+# IDE / Editor
+.idea/
+.vscode/
+
+# Arquivos de ambiente / segredos
+backend/.env
+.env
+
+# Cache Python
+__pycache__/
+*.pyc
+
+# Node / React
+frontend/node_modules/
+frontend/build/
