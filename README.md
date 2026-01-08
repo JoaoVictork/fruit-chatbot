@@ -103,7 +103,8 @@ Crie um arquivo chamado `.env` dentro da pasta `backend` com, pelo menos:
 ```env
 GEMINI_API_KEY=SEU_TOKEN_AQUI
 # Opcional: sobrescrever o modelo padrão
-# GEMINI_MODEL_NAME=models/gemini-1.5-flash
+# Exemplo recomendado (caso esteja habilitado na sua conta):
+# GEMINI_MODEL_NAME=models/gemini-2.5-flash
 ```
 
 > A chave do Gemini pode ser obtida no console da Google AI (Gemini API).
@@ -275,9 +276,11 @@ Ao receber uma pergunta em `/chat`:
    - a fruta a partir do texto (por exemplo: banana, maçã/maca, manga, uva, abacaxi, morango, etc.),
    - o tipo de informação (`preço` ou `estoque`) a partir de palavras como "preço", "valor", "custa",
      "estoque", "disponível", "tem", "quantas", etc.
-
-4. Com o par `(fruit, info)` definido, o serviço consulta o banco SQLite e monta uma resposta em português,
-   devolvendo sempre um JSON no formato `ChatResponse`.
+4. Antes de consultar o banco, nomes de frutas retornados pelo modelo (incluindo plurais como
+   `"bananas"`, `"morangos"`, `"uvas"`, etc.) são normalizados para o nome canônico cadastrado no
+   SQLite (por exemplo, `"Banana"`, `"Morango"`, `"Uva"`).
+5. Com o par `(fruit, info)` definido e normalizado, o serviço consulta o banco SQLite e monta uma
+   resposta em português, devolvendo sempre um JSON no formato `ChatResponse`.
 
 ---
 
